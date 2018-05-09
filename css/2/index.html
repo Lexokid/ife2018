@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body{
+      display: flex;
+      justify-content: space-around;
+    }
+    div{
+      border: 2px solid #ebebeb;
+      width: 55px;
+      height: 64px;
+      line-height: 64px;
+      text-align: center;
+    }
+    .box1{
+      transform: skewX(30deg)
+    }
+    .box2{
+      transform: scaleX(0.5)
+    }
+    .box3{
+      transform: rotateZ(45deg)
+    }
+    .box4{
+      transform: translate(10px,20px)
+    }
+    .box5{
+      transform: skewX(30deg) scaleX(0.5) rotateZ(45deg) translate(10px,20px)
+    }
+  </style>
+</head>
+<body>
+  <div>box0</div>
+  <div class="box1">box1</div>
+  <div class="box2">box2</div>
+  <div class="box3">box3</div>
+  <div class="box4">box4</div>
+  <div class="box5">box5</div>
+</body>
+</html>
