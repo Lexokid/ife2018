@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .stage{
+      perspective: 2000px;
+      perspective-origin: 50% 50%;
+    }
+
+    .reverse{
+      transform-style: preserve-3d;
+      transform-origin: 50%;
+      width: 250px;
+      height: 350px;
+      position: relative;
+      transition: transform 1s;
+    }
+
+    img{
+      position: absolute;
+    }
+
+    .reverse:hover{
+      transform: rotateY(180deg);
+      transition: transform 1s;
+    }
+
+    .hide{
+      backface-visibility: hidden;
+    }
+    
+    .back{
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="reverse">
+      <img class="back" src="./img/反面.jpg" alt="">
+      <img class="hide" src="./img/正面.jpg" alt="">
+    </div>
+  </div>
+</body>
+</html>
