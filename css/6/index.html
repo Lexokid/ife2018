@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-size: 20px;
+    }
+
+    .wrap {
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      bottom: 10px;
+      width: 100vw;
+    }
+
+    .wrap input {
+      display: block;
+      outline: none;
+      width: 121px;
+      height: 121px;
+      border: none;
+      padding: 0;
+      margin: 0 5px;
+      filter: brightness(0.7);
+      background-position: 50% 50%;
+    }
+
+    .wrap input:hover{
+      filter: brightness(1)
+    }
+
+    .img_wrap {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      top: calc(100% + 10px);
+      transform: translateY(-100%);
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .a_1 {
+      background-image: url(./img/1.jpg);
+    }
+
+    .a_2 {
+      background-image: url(./img/2.jpg);
+    }
+
+    .a_3 {
+      background-image: url(./img/3.jpg);
+    }
+
+    .a_4 {
+      background-image: url(./img/4.jpg);
+    }
+
+    .a_5 {
+      background-image: url(./img/5.jpg);
+    }
+
+    .img_wrap img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: contain ;
+    }
+
+    .wrap .a_1:focus~.img_wrap .b_1 {
+      z-index: 1;
+      animation: anima1 ease-out .5s;
+    }
+
+    .wrap .a_2:focus~.img_wrap .b_2 {
+      z-index: 1;
+      animation: anima2 ease-out .5s;
+    }
+
+    .wrap .a_3:focus~.img_wrap .b_3 {
+      z-index: 1;
+      animation: anima3 ease-in 1s;
+    }
+
+    .wrap .a_4:focus~.img_wrap .b_4 {
+      z-index: 1;
+      animation: anima4 ease-out 1s;
+    }
+
+    .wrap .a_5:focus~.img_wrap .b_5 {
+      z-index: 1;
+      animation: anima5 ease-in-out .7s;
+    }
+
+    @keyframes anima1 {
+      from {
+        transform: translateX(-500px);
+      }
+    }
+
+    @keyframes anima2 {
+      from {
+        transform: translateY(350px);
+      }
+    }
+
+    @keyframes anima3 {
+      from {
+        transform: scale(0.1);
+      }
+    }
+
+    @keyframes anima4 {
+      from {
+        transform: scale(2);
+      }
+    }
+
+    @keyframes anima5 {
+      from {
+        transform: rotate(-360deg) scale(0.1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  纯css实现
+  <br>
+  欢迎看源码
+  <div class="wrap">
+    <input class="a_1" type="button">
+    <input class="a_2" type="button">
+    <input class="a_3" type="button">
+    <input class="a_4" type="button">
+    <input class="a_5" type="button">
+    <div class="img_wrap">
+      <img class="b_5" src="./img/5.jpg" alt="">
+      <img class="b_4" src="./img/4.jpg" alt="">
+      <img class="b_3" src="./img/3.jpg" alt="">
+      <img class="b_2" src="./img/2.jpg" alt="">
+      <img class="b_1" src="./img/1.jpg" alt="">
+    </div>
+  </div>
+</body>
+
+</html>
