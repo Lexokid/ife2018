@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/4.13.0/bodymovin.min.js"></script>
+  <style>
+    body {
+      background-color: #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #animation1 {
+      height: 400px;
+    }
+
+    #animation2 {
+      height: 200px;
+      width: 200px;
+      border: 1px;
+      background: #2DA2F8;
+      box-shadow: 0 1px 18px rgba(0, 0, 0, 0.1), 0 5px 30px rgba(0, 0, 0, 0.09);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="animation1"></div>
+  <div id="animation2"></div>
+  <script>
+    const anim1 = bodymovin.loadAnimation({
+      path: 'data.json',
+      loop: true,
+      autoplay: true,
+      renderer: 'svg',
+      container: document.getElementById('animation1')
+    })
+
+    const anim2 = bodymovin.loadAnimation({
+      path: 'data2.json',
+      loop: false,
+      autoplay: false,
+      renderer: 'svg',
+      container: document.getElementById('animation2')
+    })
+
+    const animElm = document.getElementById('animation2')
+
+    animElm.addEventListener('mouseenter', function () {
+      anim2.play()
+    })
+    animElm.addEventListener('mouseleave', function () {
+      anim2.stop()
+    })
+  </script>
+</body>
+
+</html>
