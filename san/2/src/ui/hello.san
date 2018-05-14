@@ -1,0 +1,19 @@
+<template>
+  <div class="a">{{value}}</div>
+</template>
+
+<script>
+export default {
+  initData() {
+    return {
+      value: 'hello world!'
+    };
+  }
+}
+</script>
+
+<style>
+.a{
+  color: red;
+}
+</style>
