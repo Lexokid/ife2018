@@ -27,12 +27,19 @@
       box-shadow: 0 1px 18px rgba(0, 0, 0, 0.1), 0 5px 30px rgba(0, 0, 0, 0.09);
       border-radius: 4px;
     }
+
+    #animation3 {
+      height: 500px;
+      width: 900px;
+
+    }
   </style>
 </head>
 
 <body>
   <div id="animation1"></div>
   <div id="animation2"></div>
+  <div id="animation3"></div>
   <script>
     const anim1 = bodymovin.loadAnimation({
       path: 'data.json',
@@ -50,6 +57,14 @@
       container: document.getElementById('animation2')
     })
 
+    const anim3 = bodymovin.loadAnimation({
+      path: 'data3.json',
+      loop: false,
+      autoplay: false,
+      renderer: 'svg',
+      container: document.getElementById('animation3')
+    })
+
     const animElm = document.getElementById('animation2')
 
     animElm.addEventListener('mouseenter', function () {
@@ -57,6 +72,15 @@
     })
     animElm.addEventListener('mouseleave', function () {
       anim2.stop()
+    })
+
+    const animElm3 = document.getElementById('animation3')
+
+    animElm3.addEventListener('mouseenter', function () {
+      anim3.play()
+    })
+    animElm3.addEventListener('mouseleave', function () {
+      anim3.stop()
     })
   </script>
 </body>
