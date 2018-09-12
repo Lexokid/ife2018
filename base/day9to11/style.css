@@ -10,6 +10,10 @@ button {
   padding: 0;
 }
 
+li {
+  list-style: none;
+}
+
 html,
 body {
   font-family: 'Montserrat', sans-serif;
@@ -490,6 +494,7 @@ input {
   border-radius: 2px;
   border: none;
   color: #fff;
+  cursor: pointer;
 }
 
 .contacts input::-webkit-input-placeholder,
@@ -535,8 +540,45 @@ input {
   width: 225px;
 }
 
-.hooter{
+.footer {
   height: 410px;
   background-color: #141414;
   color: #fff;
+  overflow: hidden;
+}
+
+.footer .menus {
+  width: 1170px;
+  height: 100%;
+  margin: 88px auto 0;
+  display: flex;
+}
+
+.footer .menus .menu {
+  flex: 1;
+}
+
+.footer .menus .menu li:first-child {
+  font-size: 16px;
+  /* line-height: 46px; */
+  letter-spacing: 2px;
+}
+
+.footer .menus .menu li:not(:first-child) {
+  margin-top: 36px;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.footer .menus .socials {
+  width: 260px;
+}
+
+.footer .menus .socials li:last-child {
+  cursor: auto;
+}
+
+.footer .menus .socials li:last-child img {
+  cursor: pointer;
+  margin-right: 23px;
 }
