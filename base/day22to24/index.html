@@ -76,6 +76,10 @@
   <fieldset class="trimStr">
     <legend>去空格</legend>
   </fieldset>
+  <fieldset class="tree">
+    <legend>遍历树</legend>
+  </fieldset>
+  <h2>后续内容在console及源码</h2>
   <script>
     window.onload = function () {
       function $(selector) {
@@ -92,6 +96,7 @@
 
       const log = console.log.bind(console)
       const err = console.error.bind(console)
+      const table = console.table.bind(console)
 
       // 检查两个输入框是否是数字
       function checkNum() {
@@ -350,9 +355,13 @@
       去掉字符串str中，连续重复的地方
       */
       function removeRepetition(str) {
-        var result = ""
+        let result = ""
 
-        // do something
+        for (let [index, item] of Object.entries(str)) {
+          index = Number(index)
+          if (result.endsWith(item)) continue
+          result += item
+        }
 
         return result
       }
@@ -363,6 +372,304 @@
       console.log(removeRepetition("aabbaabb")) // ->abab
       console.log(removeRepetition("")) // ->
       console.log(removeRepetition("abc")) // ->abc
+
+      log('*-----------------二叉树----------------------*')
+
+      const tree = {
+        "id": 0,
+        "name": "root",
+        "left": {
+          "id": 1,
+          "name": "Simon",
+          "left": {
+            "id": 3,
+            "name": "Carl",
+            "left": {
+              "id": 7,
+              "name": "Lee",
+              "left": {
+                "id": 11,
+                "name": "Fate"
+              }
+            },
+            "right": {
+              "id": 8,
+              "name": "Annie",
+              "left": {
+                "id": 12,
+                "name": "Saber"
+              }
+            }
+          },
+          "right": {
+            "id": 4,
+            "name": "Tony",
+            "left": {
+              "id": 9,
+              "name": "Candy"
+            }
+          }
+        },
+        "right": {
+          "id": 2,
+          "name": "right",
+          "left": {
+            "id": 5,
+            "name": "Carl",
+          },
+          "right": {
+            "id": 6,
+            "name": "Carl",
+            "right": {
+              "id": 10,
+              "name": "Kai"
+            }
+          }
+        }
+      }
+
+      const treeDom = $('.tree')
+      const pre2 = document.createElement('pre')
+      pre2.style.fontSize = '16px'
+      pre2.innerHTML = findIdByName.toString() + '\n\n' +
+        findNameById.toString() + '\n\n' +
+        getListWithDLR.toString() + '\n\n' +
+        getListWithLDR.toString() + '\n\n' +
+        getListWithLRD.toString()
+
+      treeDom.appendChild(pre2)
+
+      log('*-----------------findIdByName----------------------*')
+      // 假设id和name均不会重复，根据输入name找到对应的id
+      function findIdByName(node, name) {
+        const stack = []
+        let cur = node
+
+        // 二叉树前序非递归遍历
+        // 根节点->左节点->右节点
+        // while (cur || stack.length > 0) {
+        //   while (cur) {
+        //     console.log(cur.name)
+        //     if (cur.name === name) return cur.id
+        //     stack.push(cur)
+        //     cur = cur.left
+        //   }
+
+        //   const top = stack.pop()
+        //   cur = top.right
+        // }
+
+        // 二叉树中序非递归遍历
+        // 左节点->根节点->右节点
+        // while (cur || stack.length > 0) {
+        //   while (cur) {
+        //     stack.push(cur)
+        //     cur = cur.left
+        //   }
+
+        //   const top = stack.pop()
+        //   console.log(top.name)
+        //   if (top.name === name) return top.id
+        //   cur = top.right
+        // }
+
+        // 二叉树后序非递归遍历
+        // 左节点->右节点->根节点
+        // 须保证左子树和右子树都访问完以后才能访问根节点
+        // 有两种情况可以访问根节点
+        // 1.节点无左右节点
+        // 2.节点左右节点已被访问(只需判断左节点或右节点中的一个即可)
+        // 引入变量记录上一次访问的节点
+        let pre
+        stack.push(node)
+        while (stack.length) {
+          cur = stack[stack.length - 1]
+          if ((!cur.left && !cur.right) || // 节点无左右节点
+            (pre && (pre === cur.left || pre === cur.right))) { // 节点左右节点已被访问
+            console.log(cur.name)
+            if (cur.name === name) return cur.id
+            stack.pop()
+            pre = cur
+          } else {
+            if (cur.right) stack.push(cur.right)
+            if (cur.left) stack.push(cur.left)
+          }
+        }
+
+        return null
+      }
+
+      log(findIdByName(tree, 'Saber'))
+
+      log('*-----------------findNameById----------------------*')
+      // 假设id和name均不会重复，根据输入id找到对应的name
+      function findNameById(node, id) {
+        const stack = []
+        let cur = node
+
+        while (cur || stack.length > 0) {
+          while (cur) {
+            console.log(cur.name)
+            if (cur.id === id) return cur.name
+            stack.push(cur)
+            cur = cur.left
+          }
+
+          const top = stack.pop()
+          cur = top.right
+        }
+
+        return null
+      }
+
+      log(findNameById(tree, 12))
+
+      log('*-----------------前序遍历----------------------*')
+      // 把这个对象中所有的名字以“前序遍历”的方式全部输出到console中
+      function getListWithDLR(node, fn) {
+        // console.log(node.name)
+        if (typeof fn === 'function') fn(node)
+        if (node.left) getListWithDLR(node.left, fn)
+        if (node.right) getListWithDLR(node.right, fn)
+      }
+      getListWithDLR(tree, (node) => console.log(node.name))
+
+      log('*-----------------中序遍历----------------------*')
+      // 把这个对象中所有的名字以“中序遍历”的方式全部输出到console中
+      function getListWithLDR(node) {
+        if (node.left) getListWithLDR(node.left)
+        console.log(node.name)
+        if (node.right) getListWithLDR(node.right)
+      }
+      getListWithLDR(tree)
+
+      log('*-----------------后序遍历----------------------*')
+      // 把这个对象中所有的名字以“后序遍历”的方式全部输出到console中
+      function getListWithLRD(node) {
+        if (node.left) getListWithLRD(node.left)
+        if (node.right) getListWithLRD(node.right)
+        console.log(node.name)
+      }
+      getListWithLRD(tree)
+
+      log('*-----------------sort----------------------*')
+      let arr = [43, 54, 4, -4, 84, 100, 58, 27, 140]
+      table(arr.sort((a, b) => a - b))
+      table(arr.sort((a, b) => b - a))
+      arr = ['apple', 'dog', 'cat', 'car', 'zoo', 'orange', 'airplane']
+      table(arr.sort())
+      table(arr.sort().reverse())
+      arr = [
+        [10, 14],
+        [16, 60],
+        [7, 44],
+        [26, 35],
+        [22, 63]
+      ]
+      table(arr.sort((a, b) => b[1] - a[1]))
+      arr = [{
+        id: 1,
+        name: 'candy',
+        value: 40
+      }, {
+        id: 2,
+        name: 'Simon',
+        value: 50
+      }, {
+        id: 3,
+        name: 'Tony',
+        value: 45
+      }, {
+        id: 4,
+        name: 'Annie',
+        value: 60
+      }]
+      table(arr.sort((a, b) => a.value - b.value))
+
+      log('*-----------------对象转二维数组----------------------*')
+      const scoreObject = {
+        "Tony": {
+          "Math": 95,
+          "English": 79,
+          "Music": 68
+        },
+        "Simon": {
+          "Math": 100,
+          "English": 95,
+          "Music": 98
+        },
+        "Annie": {
+          "Math": 54,
+          "English": 65,
+          "Music": 88
+        }
+      }
+      const scoreArray = []
+      for (let [key, value] of Object.entries(scoreObject)) {
+        const arr = []
+        arr.push(key)
+        for (let i of Object.values(value)) {
+          arr.push(i)
+        }
+        scoreArray.push(arr)
+      }
+      table(scoreArray)
+
+      log('*-----------------数组转为对象----------------------*')
+      const menuArr = [
+        [1, "Area1", -1],
+        [2, "Area2", -1],
+        [3, "Area1-1", 1],
+        [4, "Area1-2", 1],
+        [5, "Area2-1", 2],
+        [6, "Area2-2", 2],
+        [7, "Area1-2-3", 4],
+        [8, "Area2-2-1", 6],
+      ]
+
+      log(JSON.stringify(arr2obj(menuArr), null, 2))
+
+      function arr2obj(arr) {
+        const obj = {}
+
+        arr.forEach(i => {
+          if (!i[2] || i[2] === -1) {
+            obj[i[0]] = {
+              name1: i[1]
+            }
+          } else {
+            traverseTree(obj, (node, key) => {
+              if (key == i[2]) {
+                if (!node.subMenu) node.subMenu = {}
+                node.subMenu[i[0]] = {
+                  name1: i[1]
+                }
+              }
+            })
+          }
+        })
+
+        return obj
+      }
+
+      function traverseTree(obj, fn) {
+        if (!obj) return
+
+        const queue = []
+        queue.push(obj)
+        let top
+        while (queue.length) {
+          top = queue.shift()
+          for (const [key, item] of Object.entries(top)) {
+            // if (key === data) return item
+            if (item.subMenu) queue.push(item.subMenu)
+            if (typeof fn === 'function') {
+              if (fn(item, key)) return
+            }
+          }
+        }
+      }
+
     }
   </script>
 </body>
